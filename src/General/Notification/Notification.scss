@@ -1,0 +1,56 @@
+.notification__container {
+  font-family: Arial;
+}
+
+.notification__bell {
+  display: inline-block;
+  position: relative;
+  padding: 0.6em;
+  background: #5dc2f0;
+  border-radius: 0.2em;
+  font-size: 1.3em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  cursor: pointer;
+}
+
+.notification__list__container {
+  width: 465px;
+  position: absolute;
+  top: 65px;
+  left: -210px;
+  background-color: #5dc2f0;
+}
+
+.notification__list__header {
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  line-height: 70px;
+  height: 70px;
+  text-transform: uppercase;
+}
+.notification__list__content {
+  background-color: #fff;
+  margin: 1px;
+}
+.notification__list__footer {
+  height: 70px;
+
+   a {
+    line-height: 70px;
+    text-align: center;
+    display: block;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+
+    :hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.notification {
+
+}
