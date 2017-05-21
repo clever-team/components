@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Component from 'lsk-general/General/Component';
-import NotificationList from './NotificationList';
+import PushList from './PushList';
 // import cx from 'classnames';
 import css from 'importcss';
 import { autobind } from 'core-decorators';
 
 import Bell from 'react-icons/lib/fa/bell';
 
-@css(require('./Notification.scss'))
+@css(require('./PushList.scss'))
 export default class NotificationBox extends Component {
 
   static defaultProps = {
@@ -48,7 +48,7 @@ export default class NotificationBox extends Component {
     const { notifications, showCount } = this.props;
     // const countNotifications = notifications.length;
     const showList = this.state.showList;
-    const notificationsList = showList ? <NotificationList showCount={showCount} notifications={notifications} /> : '';
+    const notificationsList = showList ? <PushList showCount={showCount} notifications={notifications} /> : '';
 
     return (
       <div styleName="notification__container">

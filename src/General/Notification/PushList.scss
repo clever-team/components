@@ -1,3 +1,11 @@
+$blue: #5dc2f0;
+$white: #fff;
+
+$h70: 70px;
+
+$fs-large: 22px;
+$fs-med: 18px;
+
 .notification__container {
   font-family: Arial;
 }
@@ -6,11 +14,11 @@
   display: inline-block;
   position: relative;
   padding: 0.6em;
-  background: #5dc2f0;
+  background: $blue;
   border-radius: 0.2em;
   font-size: 1.3em;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  color: #fff;
+  color: $white;
   cursor: pointer;
 }
 
@@ -19,38 +27,43 @@
   position: absolute;
   top: 65px;
   left: -210px;
-  background-color: #5dc2f0;
+  background-color: $blue;
 }
 
 .notification__list__header {
   text-align: center;
-  color: #fff;
-  font-size: 22px;
-  line-height: 70px;
-  height: 70px;
+  color: $white;
+  font-size: $fs-large;
+  line-height: $h70;
+  height: $h70;
   text-transform: uppercase;
 }
 .notification__list__content {
-  background-color: #fff;
+  background-color: $white;
   margin: 1px;
 }
 .notification__list__footer {
-  height: 70px;
+  height: $h70;
 
    a {
-    line-height: 70px;
+    line-height: $h70;
     text-align: center;
     display: block;
-    color: #fff;
-    font-size: 18px;
+    color: $white;
+    font-size: $fs-med;
     cursor: pointer;
 
-    :hover {
+    &:hover {
       text-decoration: underline;
     }
   }
 }
 
 .notification {
+  margin: 5px 10px;
+}
 
+hr {
+  height: 2px;
+  color: #ddd;
 }

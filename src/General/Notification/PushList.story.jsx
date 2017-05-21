@@ -1,7 +1,8 @@
 import React from 'react';
-import NotificationList from './NotificationList';
+import PushList from './PushList';
 import NotificationBox from './NotificationBox';
-import Notification from './Notification';
+//import Notification from './Notification';
+import PushMessage from '../PushMessage';
 import take from 'lodash/take';
 
 const notifications = [{
@@ -28,26 +29,28 @@ const oneNotification = take(notifications, 1);
 const twoNotifications = take(notifications, 2);
 
 module.exports = function ({ storiesOf }) {
-  return storiesOf('Notification', module)
+  return storiesOf('PushList', module)
     .add('NotificationBox default', () => (
       <NotificationBox notifications={notifications} />
     ))
     .add('Default list', () => (
-      <NotificationList notifications={notifications} />
+      <PushList notifications={notifications} />
     ))
     .add('Empty list', () => (
-      <NotificationList notifications={[]} />
+      <PushList notifications={[]} />
     ))
     .add('One notification in list', () => (
-      <NotificationList notifications={oneNotification} />
+      <PushList notifications={oneNotification} />
     ))
     .add('Two notifications in list', () => (
-      <NotificationList notifications={twoNotifications} />
+      <PushList notifications={twoNotifications} />
     ))
     .add('Showing three notifications in list', () => (
-      <NotificationList showCount={3} notifications={notifications} />
+      <PushList showCount={3} notifications={notifications} />
     ))
     .add('Notification content', () => (
-      <Notification content={<div>Simple notification content</div>} />
+      <PushMessage>
+        {<div>Simple notification content</div>}
+      </PushMessage>
     ));
 };

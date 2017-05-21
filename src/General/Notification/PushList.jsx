@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Component from 'lsk-general/General/Component';
-import Notification from '../Notification';
+//import Notification from '../Notification';
+import PushMessage from '../PushMessage';
 // import cx from 'classnames';
 import css from 'importcss';
 import { autobind } from 'core-decorators';
 import take from 'lodash/take';
-import plural from './plural';
+import plural from './utils/plural';
 
-@css(require('../Notification.scss'))
-export default class NotificationList extends Component {
+@css(require('./PushList.scss'))
+export default class PushList extends Component {
 
   static defaultProps = {
-    showCount: 4,
+    showCount: 4,//TODO rename to pageSize
   }
 
   static propTypes = {
@@ -45,11 +46,9 @@ export default class NotificationList extends Component {
 
     const notificationNodes = visibleNotifications.map(notification =>
       (
-        <div key={notification.id}>
-          <Notification content={notification.content} />
-        </div>
+        <PushMessage content={notification.content} id={notification.id}/>
       ),
-    );
+    ).join('<hr>');
 
     const eventCount = notifications.length;
     const eventCountTxt = eventCount === 0 ? 'Нет событий' : `${eventCount} ${plural(eventCount, 'событие', 'события', 'событий')}`;

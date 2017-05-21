@@ -19,19 +19,19 @@ module.exports = ({ storiesOf, action }) => {
             
             return (
                 <div style={{width: '20em'}}>
-                    <PushMessage user={onlineUser}>
-                            <strong>Валентин Самойлов</strong> прокомментировал вашу сделку <a href="#">Преролл для ролика</a>
+                    <PushMessage user={onlineUser} action={1}>
+                        {<a href="#">Преролл для ролика Победители конкурса МИСС-2017</a>}
                     </PushMessage>
                 </div>
             )
             
         })  
-        .add('PushMessage comment with ellipsis', () => {
+        .add('PushMessage agree', () => {
             
             return (
                 <div style={{width: '20em'}}>
-                    <PushMessage user={onlineUser}>
-                            <strong>Валентин Самойлов</strong> прокомментировал вашу сделку <a href="#">Преролл для ролика</a> Этот текст долже показываться с многоточием
+                    <PushMessage user={onlineUser} action={2}>
+                        {<a href="#">Преролл для ролика Победители конкурса МИСС-2017</a>}
                     </PushMessage>
                 </div>
             )
@@ -41,8 +41,8 @@ module.exports = ({ storiesOf, action }) => {
             
             return (
                 <div style={{width: '20em'}}>
-                    <PushMessage user={offlineUser}>
-                            <strong>Валентин Самойлов</strong> прокомментировал вашу сделку <a href="#">Преролл для ролика</a>
+                    <PushMessage user={offlineUser} action={1}>
+                        {<a href="#">Преролл для ролика</a>}
                     </PushMessage>
                 </div>
             )
