@@ -1,0 +1,133 @@
+$blue: #5dc2f0;
+$white: #fff;
+$greyFont: #3d3e42;
+$greyBG: #eceff4;
+$greyBorder: #e7e7e7;
+
+$h45: 45px;
+
+$fs-large: 22px;
+$fs-med: 18px;
+
+$arrow-half: 13px;
+
+.notification__container {
+  font-family: Arial;
+
+  .notification__bell {
+    display: inline-block;
+    position: relative;
+    padding: 0.6em;
+    background: $blue;
+    border-radius: 0.2em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: $white;
+    cursor: pointer;
+  }
+}
+
+.notification__list__container {
+  font-family: Arial;
+  width: 350px;
+  position: absolute;
+  top: 38px;
+  left: -157px;
+
+  .notification__arrow-up {
+    position: relative;
+    left: -webkit-calc(50% - #{$arrow-half});
+    left:    -moz-calc(50% - #{$arrow-half});
+    left:         calc(50% - #{$arrow-half});
+    width: 0;
+    height: 0;
+    border-left: $arrow-half solid transparent;
+    border-right: $arrow-half solid transparent;
+    border-bottom: $arrow-half solid $blue;
+  }
+
+  .notification__content {
+    background-color: $blue;
+
+    .notification__list__header {
+      text-align: center;
+      color: $white;
+      // font-size: $fs-large;
+      line-height: $h45;
+      height: $h45;
+      text-transform: uppercase;
+      padding-top: 5px;
+
+      a {
+        text-decoration: none;
+      }
+    }
+    .notification__list__content {
+      background-color: $white;
+      border: 1px solid $blue;
+      color: $greyFont;
+    }
+    .notification__list__footer {
+      height: $h45;
+      padding-top: 5px;
+
+      a {
+        line-height: $h45;
+        text-align: center;
+        display: block;
+        color: $white;
+        font-size: $fs-med;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.notification__wrapper {
+  padding: 10px;
+  background-color: $white;
+  color: $greyFont;
+  border-bottom: 1px solid $greyBorder;
+  font-family: Arial;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover .notification__message {
+    opacity: 0.7;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .notification {
+    display: flex;
+
+    .notification__avatar {
+      margin-right: 10px;
+    }
+    .notification__message {
+      a {
+        color: $blue;
+      }
+      a.notification__username {
+        color: $greyFont;
+      }
+    }
+  }
+}
+.notification__wrapper.not-viewed {
+  background-color: $greyBG;
+}

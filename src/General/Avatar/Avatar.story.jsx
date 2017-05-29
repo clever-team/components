@@ -2,53 +2,133 @@ import React from 'react';
 import Avatar from './Avatar';
 import _ from 'lodash';
 
-const rndNum = 1;
-const avatarImg = `https://randomuser.me/api/portraits/men/${rndNum}.jpg`;
+// const rndNum = _.random(99);
+const avatarImg = `https://randomuser.me/api/portraits/men/${_.random(99)}.jpg`;
+const smallImg = 'http://placeimg.com/32/32/people';
+const largeImg = 'http://placeimg.com/1920/1920/people';
+const noProportionalImg = 'http://placeimg.com/640/320/people';
+// const image = 'http://placeimg.com/320/240/arch';
 
-module.exports = function ({ storiesOf, action }) {
+const user = () => ({
+  name: 'John Smith',
+  avatar: avatarImg,
+});
+const image = () => ({
+  title: 'Architecture',
+  src: 'http://placeimg.com/320/240/arch',
+});
+
+module.exports = function ({ storiesOf, action, knob }) {
   return storiesOf('Avatar', module)
-    .add('default', () => (
-      <Avatar src={avatarImg} name="John Smith" />
+    .add('Default as img', () => (
+      <Avatar {...image()} />
     ))
-    .add('no avatar', () => (
-      <Avatar name="John Smith" />
+    .add('Default as user', () => (
+      <Avatar {...user()} />
     ))
-    .add('sizes', () => (
+    .add('Empty', () => (
+      <Avatar />
+    ))
+    .add('No image', () => (
       <div>
-        <Avatar src={avatarImg} name="John Smith" size={32} />
-        <Avatar src={avatarImg} name="John Smith" size={64} />
-        <Avatar src={avatarImg} name="John Smith" size={100} />
+        <Avatar name="John Smith" />
+        <Avatar name="John Smith" textSizeRatio={2} />
+        <Avatar name="John Smith" textSizeRatio={4} />
       </div>
     ))
-    .add('border', () => (
+    .add('Size', () => (
       <div>
-        <Avatar src={avatarImg} name="John Smith" border />
-        <Avatar src={avatarImg} name="John Smith" border borderWidth={2} borderColor="#4CAF50" />
-        <Avatar src={avatarImg} name="John Smith" border borderWidth={4} borderColor="#F44336" />
+        <Avatar {...user()} size={32} />
+        <Avatar {...user()} size={64} />
+        <Avatar {...user()} size={100} />
+        <Avatar {...user()} width={100} height={50} />
+        <Avatar {...user()} width={50} height={100} />
       </div>
     ))
-    .add('badges', () => (
+    .add('Custom style', () => (
       <div>
-        <Avatar src={avatarImg} name="John Smith" badgeContent={<div style={{ width: 10, height: 10, backgroundColor: '#4CAF50', borderRadius: '50%', position: 'absolute', right: '0px', bottom: '0px', border: '2px solid #fff' }} />} />
-        <Avatar name="Offline" badgeContent={<div style={{ width: 10, height: 10, backgroundColor: '#F44336', borderRadius: '50%', position: 'absolute', right: '0px', bottom: '0px', border: '2px solid #fff' }} />} />
+        <Avatar {...user()} innerStyle={{ border: '2px solid #00BCD4' }} />
+        <Avatar {...user()} innerStyle={{ border: '3px solid #4CAF50', padding: '2px' }} />
+        <Avatar {...user()} innerStyle={{ border: '4px solid #F44336', padding: '3px' }} />
+        <Avatar {...user()} style={{ boxShadow: '1px 1px 10px 2px #ccc' }} />
+        <Avatar {...user()} innerStyle={{ boxShadow: '1px 1px 10px 2px #ccc' }} />
       </div>
     ))
-    .add('inactive', () => (
+    .add('Badge', () => (
       <div>
-        <Avatar src={avatarImg} name="John Smith" inactive />
-        <Avatar name="John Smith" inactive />
+        <Avatar {...user()}>
+          <Avatar.Badge right bottom>
+            <div style={{ width: 10, height: 10, backgroundColor: '#4CAF50', borderRadius: '50%', border: '2px solid #fff' }} />
+          </Avatar.Badge>
+        </Avatar>
+
+        <Avatar title="Offline Smith">
+          <Avatar.Badge right bottom>
+            <div style={{ width: 10, height: 10, backgroundColor: '#F44336', borderRadius: '50%', border: '2px solid #fff' }} />
+          </Avatar.Badge>
+        </Avatar>
+
+        <Avatar>
+          <Avatar.Badge left top >
+            <div style={{ width: 10, height: 10, backgroundColor: '#4CAF50', borderRadius: '50%', border: '2px solid #fff' }} />
+          </Avatar.Badge>
+          <Avatar.Badge right top >
+            <div style={{ width: 10, height: 10, backgroundColor: '#F44336', borderRadius: '50%', border: '2px solid #fff' }} />
+          </Avatar.Badge>
+          <Avatar.Badge left bottom >
+            <div style={{ width: 10, height: 10, backgroundColor: '#03A9F4', borderRadius: '50%', border: '2px solid #fff' }} />
+          </Avatar.Badge>
+          <Avatar.Badge right bottom >
+            <div style={{ width: 10, height: 10, backgroundColor: '#FFC107', borderRadius: '50%', border: '2px solid #fff' }} />
+          </Avatar.Badge>
+        </Avatar>
+
+        <Avatar>
+          <div style={{ width: 10, height: 10, backgroundColor: '#F44336', borderRadius: '50%', position: 'absolute', right: '24px', bottom: '24px', border: '2px solid #fff' }} />
+        </Avatar>
       </div>
     ))
-    .add('shadow', () => (
+    .add('Shape', () => (
       <div>
-        <Avatar src={avatarImg} name="John Smith" shadow />
+        <Avatar {...user()} shape="circle" />
+        <Avatar {...user()} shape="square" />
+        <Avatar {...user()} shape="rounded" />
       </div>
     ))
-    .add('shapes', () => (
+    .add('Small avatar', () => (
+      <Avatar name="John Smith" avatar={smallImg} />
+    ))
+    .add('Large avatar', () => (
+      <Avatar name="John Smith" avatar={largeImg} />
+    ))
+    .add('Failed img', () => (
+      <Avatar name="John Smith" avatar="/failed-img.png" />
+    ))
+    .add('No proportional', () => (
       <div>
-        <Avatar src={avatarImg} name="John Smith" shape="circle" />
-        <Avatar src={avatarImg} name="John Smith" shape="square" />
-        <Avatar src={avatarImg} name="John Smith" shape="rounded" />
+        <Avatar name="John Smith" avatar={noProportionalImg} />
+        <Avatar name="John Smith" avatar={noProportionalImg} width={128} height={64} />
+        <Avatar name="John Smith" avatar={noProportionalImg} shape="rounded" width={128} height={64} />
       </div>
+    ))
+    .add('With tag a', () => (
+      <a href="#"><Avatar {...user()} /></a>
+    ))
+    .add('Knobs', () => (
+      <Avatar
+        name={knob.text('Username', 'John Smith')}
+        avatar={knob.text('User avatar URL', avatarImg)}
+        title={knob.text('Image title', '')}
+        src={knob.text('Image URL', '')}
+        size={knob.number('Size', 64)}
+        width={knob.number('Width')}
+        height={knob.number('Height')}
+        shape={knob.select('Shape', { cirlce: 'circle', rounded: 'rounded', square: 'square' }, 'circle')}
+        backgroundColor={knob.color('Background color')}
+        textColor={knob.color('Text color')}
+        textSizeRatio={knob.number('Text size ratio')}
+        style={knob.object('Style', { padding: '10px' })}
+        innerStyle={knob.object('Inner style', {})}
+      />
     ));
 };

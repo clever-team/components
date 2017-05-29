@@ -1,118 +1,138 @@
-import React, { PropTypes } from 'react';
-// import PropTypes from 'prop-types';
-import importcss from 'importcss';
-// import classNames from 'classnames';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Component from 'lsk-general/General/Component';
+import _ from 'lodash';
+import ReactImageFallback from 'react-image-fallback';
+
+import defaultAvatar from './img/default-avatar.png';
+import gifSpinner from './img/loading.gif';
 
 export default class Avatar extends Component {
 
   static defaultProps = {
+    title: '',
+    name: '',
     src: '',
+    avatar: '',
+
     size: 64,
-    bgColor: '#9F9',
-    shape: 'circle',
-    color: '#FFF',
+    width: null,
+    height: null,
+
+    backgroundColor: '#9F9',
+    textColor: '#FFF',
     textSizeRatio: 3,
-    border: false,
-    borderColor: '#00BCD4',
-    borderWidth: 3,
-    shadow: false,
-    inactive: false,
-    badgeContent: '',
+
+    shape: 'circle',
+
+    style: {},
+    innerStyle: {},
+    children: null,
   }
 
   static propTypes = {
-    name: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    name: PropTypes.string,
     src: PropTypes.string,
+    avatar: PropTypes.string,
+
     size: PropTypes.number,
-    bgColor: PropTypes.string,
-    shape: PropTypes.oneOfType(['circle', 'square', 'rounded']),
-    color: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number,
+
+    backgroundColor: PropTypes.string,
+    textColor: PropTypes.string,
     textSizeRatio: PropTypes.number,
-    border: PropTypes.bool,
-    borderColor: PropTypes.string,
-    borderWidth: PropTypes.number,
-    shadow: React.PropTypes.bool,
-    inactive: PropTypes.bool,
-    badgeContent: PropTypes.any,
+
+    shape: PropTypes.oneOfType(['circle', 'square', 'rounded']),
+
+    style: PropTypes.object,
+    innerStyle: PropTypes.object,
+    children: PropTypes.object,
   };
 
-  renderAsImage() {
+  getInnerStyle() {
     const {
       size,
+      textSizeRatio,
       shape,
-      border,
-      borderColor,
-      borderWidth,
-      shadow,
-      inactive,
+      backgroundColor,
+      innerStyle,
+      textColor,
     } = this.props;
-    const name = this.props.title || this.props.name;
+
     const src = this.props.src || this.props.avatar;
 
-    const imageStyle = {
-      width: size,
-      maxWidth: '100%',
-      height: size,
-      border: border ? `${borderWidth}px solid ${borderColor}` : 'none',
-      padding: border ? '2px' : 'none',
-      borderRadius: shape === 'circle' ? '50%' : shape === 'rounded' ? 6 : 0,
-      filter: inactive ? 'grayscale(100%)' : 'none',
-      boxShadow: shadow ? '1px 1px 10px 2px #ccc' : 'none',
+    const width = this.props.width || size;
+    const height = this.props.height || size;
+
+    const lineHeight = size;
+    const fontSize = Math.floor(size / textSizeRatio);
+
+    let borderRadius = 'none';
+    if (shape === 'circle') {
+      borderRadius = '50%';
+    } else if (shape === 'rounded') {
+      borderRadius = 6;
+    }
+
+    const style = src ? {
       boxSizing: 'border-box',
+      maxWidth: '100%',
+      objectFit: 'cover',
+      overflow: 'hidden',
+      width,
+      height,
+      borderRadius,
+    } : {
+      boxSizing: 'border-box',
+      maxWidth: '100%',
+      objectFit: 'cover',
+      overflow: 'hidden',
+      width,
+      height,
+      textAlign: 'center',
+      fontFamily: 'Helvetica, Arial, sans-serif',
+      borderRadius,
+      fontSize: `${fontSize}px`,
+      lineHeight: `${lineHeight}px`,
+      backgroundColor,
+      color: textColor,
     };
 
+    return Object.assign(style, innerStyle);
+  }
+
+  renderAsImage() {
+    const title = this.props.title || this.props.name;
+    const src = this.props.src || this.props.avatar;
+
     return (
-      <img
-        width={size}
-        height={size}
-        style={imageStyle}
+      <ReactImageFallback
         src={src}
-        alt={name}
-        title={name}
+        fallbackImage={defaultAvatar}
+        initialImage={gifSpinner}
+        style={this.getInnerStyle()}
+        alt={title}
+        title={title}
       />
     );
   }
 
   renderAsText() {
-    const {
-      size,
-      bgColor,
-      shape,
-      color,
-      textSizeRatio,
-      border,
-      borderColor,
-      borderWidth,
-      shadow,
-      inactive,
-    } = this.props;
-    const name = this.props.title || this.props.name;
-    const src = this.props.src || this.props.avatar;
+    const title = this.props.title || this.props.name;
 
-    const initials = name
+    const initials = title
       .split(' ')
       .map(s => s.charAt(0))
       .join('');
 
-    const initialsStyle = {
-      width: size,
-      maxWidth: '100%',
-      height: size,
-      font: `${Math.floor(size / textSizeRatio)}px Helvetica, Arial, sans-serif`,
-      textAlign: 'center',
-      textTransform: 'uppercase',
-      lineHeight: `${size}px`,
-      color,
-      background: inactive ? 'grey' : bgColor,
-      border: border ? `${borderWidth}px solid ${borderColor}` : 'none',
-      padding: border ? '2px' : 'none',
-      borderRadius: shape === 'circle' ? '50%' : shape === 'rounded' ? 6 : 0,
-      boxShadow: shadow ? '2px 3px 8px 1px #ccc' : 'none',
-    };
-
     return (
-      <div style={initialsStyle} alt={name} title={name}>
+      <div
+        style={this.getInnerStyle()}
+        alt={title}
+        title={title}
+      >
         {initials}
       </div>
     );
@@ -120,27 +140,51 @@ export default class Avatar extends Component {
 
   render() {
     const {
-      src,
       size,
-      badgeContent,
+      style,
+      children,
     } = this.props;
 
-    const hostStyle = {
-      display: 'inline-block',
-      width: size,
-      height: size,
-      position: 'relative',
-    };
+    const src = this.props.src || this.props.avatar;
+    const width = this.props.width || size;
+    const height = this.props.height || size;
 
-    const Badge = badgeContent ? (<div>{ badgeContent }</div>) : null;
+    const wrapperStyle = Object.assign({
+      display: 'inline-block',
+      position: 'relative',
+      width,
+      height,
+    }, style);
 
     return (
-      <div style={{ display: 'inline-block' }}>
-        <div style={hostStyle}>
-          {src ? this.renderAsImage() : this.renderAsText()}
-          { Badge }
-        </div>
+      <div
+        style={wrapperStyle}
+      >
+        {src ? this.renderAsImage() : this.renderAsText()}
+        { children }
       </div>
     );
   }
 }
+
+Avatar.Badge = function (props) {
+  const offset = 0;
+  const style = {
+    position: 'absolute',
+  };
+
+  ['left', 'top', 'right', 'bottom'].forEach((dir) => {
+    if (!props[dir]) return;
+    if (typeof props[dir] === 'number') {
+      style[dir] = props[dir];
+    } else {
+      style[dir] = offset;
+    }
+  });
+
+  return (
+    <div style={style}>
+      {props.children}
+    </div>
+  );
+};

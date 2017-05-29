@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import _ from 'lodash'
 import importcss from 'importcss'
 import classnames from 'classnames'
+import { autobind } from 'core-decorators'
 
 //import MdThumbUp from 'react-icons/lib/md/thumb-up'
 //import FaMailReply from 'react-icons/lib/fa/mail-reply'
@@ -21,14 +22,14 @@ const DATE_FORMATTER = buildFormatter(ruStrings)
 
 @importcss(require('./PushMessage.scss'))
 export default class PushMessage extends Component {
-  
+
   constructor(){
     super()
     this.state = {}
   }
 
   static defaultProps = {
-    
+
   }
 
   static propTypes = {
@@ -72,7 +73,7 @@ export default class PushMessage extends Component {
     return result;
   }
 
-  render() { 
+  render() {
     //if (this.props.cut === 1) {
       const msgArr = this.cutLink(this.props.children);
     //}
@@ -100,20 +101,20 @@ export default class PushMessage extends Component {
         content = 'This is don\'t known action';
     }
     const renderBadge = () =>{
-      return this.props.user.online 
+      return this.props.user.online
       ?<div styleName="push_message__avatar-badge-online" />
       :<div styleName="push_message__avatar-badge-offline" />
     }
     const badgeClass = `push_message__avatar-badge-${this.props.user.online ? 'on' : 'off'}line`
-    const badgeStyle={ 
-      width: 10, 
-      height: 10, 
-      backgroundColor: this.props.user.online ? '#4CAF50' : '#F44336', 
-      borderRadius: '50%', 
-      position: 'absolute', right: '0px', bottom: '0px', 
+    const badgeStyle={
+      width: 10,
+      height: 10,
+      backgroundColor: this.props.user.online ? '#4CAF50' : '#F44336',
+      borderRadius: '50%',
+      position: 'absolute', right: '0px', bottom: '0px',
       border: '2px solid #fff'
     }
-    
+
     return (
       <div styleName="push_message">
 
@@ -129,7 +130,7 @@ export default class PushMessage extends Component {
             {content}
         </div>
       </div>
-    ) 
+    )
   }
 }
 
